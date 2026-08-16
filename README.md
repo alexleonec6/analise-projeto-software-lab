@@ -1,79 +1,72 @@
-# Análise e Projeto de Software - Laboratório & Implementação
+# Análise e Projeto de Software - Na Prática
 
-[![Python Tests](https://img.shields.io/badge/tests-7%20passed-brightgreen.svg)]()
-[![Course](https://img.shields.io/badge/Course-IFRS%20%2F%20MEC-blue.svg)]()
-[![Architecture](https://img.shields.io/badge/Pattern-State%20%7C%20Strategy%20%7C%20Observer-orange.svg)]()
+[![Python Tests](https://img.shields.io/badge/testes-7%20passando-brightgreen.svg)]()
+[![Curso](https://img.shields.io/badge/Curso-IFRS%20%2F%20MEC-blue.svg)]()
 
-Repositório prático contendo o **resumo conceitual completo** e uma **implementação de referência** cobrindo todos os módulos da formação **Análise e Projeto de Software** (Turma 2026B — Rede e-Tec Brasil / IFRS / Aprenda Mais - MEC).
-
----
-
-## 📚 Conteúdo do Curso
-
-O curso é estruturado em dois eixos fundamentais:
-
-1. **Módulo 1: Bases Tecnológicas e Prototipação**
-   - Evolução histórica da Engenharia de Software (F. L. Bauer, 1968, Conferência da OTAN).
-   - Engenharia em camadas (Foco na qualidade, Processos, Métodos, Ferramentas CASE).
-   - Ciclos de Vida (Tradicional / Cascata, Prototipação, Incremental / Evolucionário).
-   - Engenharia de Requisitos (FAST, QFD, Elicitação, Modelagem e Validação).
-2. **Módulo 2: Análise, Análise Orientada e Projeto**
-   - Análise Estruturada (Dicionário de Dados, DFD, DER, Diagrama de Transição de Estados).
-   - Análise Orientada a Objetos (OOA) e Projeto (OOD) com UML (Casos de Uso, Diagrama de Classes).
-   - Padrões de Projeto (*Design Patterns*) e desacoplamento de software.
-
-👉 O resumo teórico detalhado está disponível em: [`RESUMO_CURSO.md`](./RESUMO_CURSO.md).  
-👉 A documentação de requisitos e diagramas UML/DER/DTE está em: [`docs/MODELAGEM.md`](./docs/MODELAGEM.md).
+Este repositório reúne um **resumo fácil de entender** e um **pequeno sistema em Python** mostrando na prática o que foi ensinado no curso de **Análise e Projeto de Software** (Aprenda Mais / MEC / IFRS).
 
 ---
 
-## 🛠️ O Projeto de Referência: SGOS (Sistema de Gestão de Ordens de Serviço)
+## 💡 O Que Aprendemos no Curso? (Em Palavras Simples)
 
-O projeto implementa um sistema enxuto e desacoplado que sintetiza os tópicos de modelagem e design patterns estudados:
+1. **Antes de codificar, planeje**:
+   - Engenharia de software serve para não criar programas bagunçados que quebram facilmente.
+   - Ouvir bem o cliente (Requisitos) evita fazer o sistema errado.
+2. **Ciclos de vida**:
+   - Podemos fazer tudo em fila reta (Cascata), desenhar rascunhos para mostrar rápido (Prototipação) ou entregar pequenas partes úteis aos poucos (Incremental).
+3. **Orientação a Objetos e Padrões de Projeto**:
+   - Dividir o código em peças independentes (peças de Lego). Se precisar mexer em uma peça, as outras continuam funcionando sem quebrar.
 
-- **Domínio & Encapsulamento**: `Cliente` e `ItemServico` com invariantes de negócio.
-- **Padrão Strategy**: Cálculo de descontos flexíveis (`SemDesconto`, `DescontoValorFixo`, `DescontoPercentual`) sem acoplar a classe de pedido.
-- **Padrão State**: Ciclo de vida com máquina de estados finita (`CRIADA` -> `EM_EXECUCAO` -> `CONCLUIDA` / `CANCELADA`), prevenindo transições ilegais.
-- **Padrão Observer**: Disparo desacoplado de eventos de mudança de estado para logs de console e trilha de auditoria.
+👉 **Quer ler o resumo completo e descomplicado?** Veja o arquivo [`RESUMO_CURSO.md`](./RESUMO_CURSO.md).  
+👉 **Quer ver os desenhos da arquitetura?** Veja o arquivo [`docs/MODELAGEM.md`](./docs/MODELAGEM.md).
 
-### 📐 Arquitetura
+---
+
+## 🛠️ O Projeto de Exemplo: Sistema de Ordens de Serviço (SGOS)
+
+Para mostrar que a teoria funciona na prática, criamos um sistema simples de Ordem de Serviço de oficina/assistência técnica:
+
+- **Cliente e Serviços**: Guarda quem pediu e quais serviços foram feitos.
+- **Descontos Flexíveis (Padrão Strategy)**: O sistema calcula descontos facilmente (sem desconto, desconto fixo em dinheiro ou desconto em porcentagem) sem bagunçar a conta.
+- **Controle de Fases (Padrão State)**: Uma ordem começa como `CRIADA`, passa para `EM_EXECUCAO` e termina como `CONCLUIDA`. O sistema bloqueia ações sem sentido (como tentar finalizar um serviço que nem começou).
+- **Avisos Automáticos (Padrão Observer)**: Toda vez que o status da ordem muda, o sistema avisa automaticamente o painel de log e o histórico de auditoria.
+
+---
+
+## 📁 Estrutura das Pastas
 
 ```
 analise-projeto-software-lab/
 ├── docs/
-│   └── MODELAGEM.md          # Especificação de Requisitos, Casos de Uso, Diagrama de Classes e DTE
+│   └── MODELAGEM.md          # Desenhos do sistema (Casos de uso, classes e etapas)
 ├── src/
-│   ├── __init__.py
-│   ├── entidades.py          # Entidades do Domínio (Cliente, ItemServico)
-│   ├── estados_os.py         # Padrão State (Ciclo de Vida da OS)
-│   ├── estrategia_desconto.py# Padrão Strategy (Políticas de Desconto)
-│   ├── observadores.py       # Padrão Observer (Logs e Auditoria)
-│   └── ordem_servico.py      # Agregador Central da Ordem de Serviço
-├── tests.py                  # Bateria de Testes Unitários Automatizados (7 testes)
-├── main.py                   # Execução interativa demonstrativa
-├── RESUMO_CURSO.md           # Resumo completo dos tópicos do curso MEC/IFRS
+│   ├── entidades.py          # Cliente e Itens do serviço
+│   ├── estados_os.py         # As fases da ordem (Criada, Em andamento, Concluída)
+│   ├── estrategia_desconto.py# Regras de desconto
+│   ├── observadores.py       # Avisos e relatórios de histórico
+│   └── ordem_servico.py      # Junta todas as peças em uma ordem de serviço
+├── tests.py                  # 7 testes automáticos para provar que tudo funciona
+├── main.py                   # Roda uma simulação no terminal
+├── RESUMO_CURSO.md           # Resumo do curso em linguagem fácil
 └── README.md
 ```
 
 ---
 
-## 🚀 Como Executar
+## ▶️ Como Rodar no Computador
 
-### Pré-requisitos
-- Python 3.10+ (sem dependências externas; utiliza a biblioteca padrão).
+Você só precisa ter o **Python instalado** (não precisa instalar nenhuma biblioteca extra).
 
-### Executar a Demonstração
-```bash
-python main.py
-```
+1. **Ver a simulação funcionando**:
+   ```bash
+   python main.py
+   ```
 
-### Executar os Testes Unitários
-```bash
-python -m unittest tests.py
-```
+2. **Rodar os testes automáticos**:
+   ```bash
+   python -m unittest tests.py
+   ```
 
 ---
 
-## 📝 Licença
-Desenvolvido por **Alexandre Souza** ([@alexleonec6](https://github.com/alexleonec6)).  
-Distribuído sob a licença MIT.
+Feito por **Alexandre Souza** ([@alexleonec6](https://github.com/alexleonec6)).
