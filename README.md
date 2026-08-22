@@ -1,9 +1,10 @@
-# Análise e Projeto de Software - Na Prática
+# Análise e Projeto de Software - Na Prática (TypeScript)
 
-[![Python Tests](https://img.shields.io/badge/testes-7%20passando-brightgreen.svg)]()
+[![TypeScript Tests](https://img.shields.io/badge/testes-7%20passando-brightgreen.svg)]()
+[![Runtime](https://img.shields.io/badge/Node.js-v24%20(TS%20Nativo)-blue.svg)]()
 [![Curso](https://img.shields.io/badge/Curso-IFRS%20%2F%20MEC-blue.svg)]()
 
-Este repositório reúne um **resumo fácil de entender** e um **pequeno sistema em Python** mostrando na prática o que foi ensinado no curso de **Análise e Projeto de Software** (Aprenda Mais / MEC / IFRS).
+Este repositório reúne um **resumo fácil de entender** e um **sistema completo em TypeScript** demonstrando na prática o que foi ensinado no curso de **Análise e Projeto de Software** (Aprenda Mais / MEC / IFRS).
 
 ---
 
@@ -22,14 +23,14 @@ Este repositório reúne um **resumo fácil de entender** e um **pequeno sistema
 
 ---
 
-## 🛠️ O Projeto de Exemplo: Sistema de Ordens de Serviço (SGOS)
+## 🛠️ O Projeto de Exemplo: Sistema de Ordens de Serviço (SGOS em TypeScript)
 
-Para mostrar que a teoria funciona na prática, criamos um sistema simples de Ordem de Serviço de oficina/assistência técnica:
+Para mostrar que a teoria funciona na prática, criamos um sistema simples e tipado de Ordem de Serviço de oficina/assistência técnica:
 
-- **Cliente e Serviços**: Guarda quem pediu e quais serviços foram feitos.
-- **Descontos Flexíveis (Padrão Strategy)**: O sistema calcula descontos facilmente (sem desconto, desconto fixo em dinheiro ou desconto em porcentagem) sem bagunçar a conta.
-- **Controle de Fases (Padrão State)**: Uma ordem começa como `CRIADA`, passa para `EM_EXECUCAO` e termina como `CONCLUIDA`. O sistema bloqueia ações sem sentido (como tentar finalizar um serviço que nem começou).
-- **Avisos Automáticos (Padrão Observer)**: Toda vez que o status da ordem muda, o sistema avisa automaticamente o painel de log e o histórico de auditoria.
+- **Cliente e Serviços (`src/entidades.ts`)**: Interfaces e classes tipadas com invariantes de domínio.
+- **Descontos Flexíveis (`src/estrategiaDesconto.ts` - Padrão Strategy)**: O sistema calcula descontos facilmente (`SemDesconto`, `DescontoValorFixo`, `DescontoPercentual`) sem bagunçar a classe principal.
+- **Controle de Fases (`src/estadosOS.ts` - Padrão State)**: Uma ordem começa como `CRIADA`, passa para `EM_EXECUCAO` e termina como `CONCLUIDA`. O sistema bloqueia ações ilegais (como tentar finalizar um serviço que nem começou).
+- **Avisos Automáticos (`src/observadores.ts` - Padrão Observer)**: Toda vez que o status da ordem muda, o sistema avisa automaticamente o painel de log e o histórico de auditoria.
 
 ---
 
@@ -40,13 +41,15 @@ analise-projeto-software-lab/
 ├── docs/
 │   └── MODELAGEM.md          # Desenhos do sistema (Casos de uso, classes e etapas)
 ├── src/
-│   ├── entidades.py          # Cliente e Itens do serviço
-│   ├── estados_os.py         # As fases da ordem (Criada, Em andamento, Concluída)
-│   ├── estrategia_desconto.py# Regras de desconto
-│   ├── observadores.py       # Avisos e relatórios de histórico
-│   └── ordem_servico.py      # Junta todas as peças em uma ordem de serviço
-├── tests.py                  # 7 testes automáticos para provar que tudo funciona
-├── main.py                   # Roda uma simulação no terminal
+│   ├── index.ts              # Ponto de exportação dos módulos
+│   ├── entidades.ts          # Cliente e Itens do serviço
+│   ├── estadosOS.ts          # As fases da ordem (Criada, Em andamento, Concluída)
+│   ├── estrategiaDesconto.ts # Regras de desconto (Strategy)
+│   ├── observadores.ts       # Avisos e relatórios de histórico (Observer)
+│   ├── ordemServico.ts       # Junta todas as peças em uma ordem de serviço
+│   └── main.ts               # Demonstração interativa de execução
+├── tests.ts                  # 7 testes automáticos usando o runner nativo do Node.js
+├── package.json              # Configurações e scripts npm
 ├── RESUMO_CURSO.md           # Resumo do curso em linguagem fácil
 └── README.md
 ```
@@ -55,16 +58,18 @@ analise-projeto-software-lab/
 
 ## ▶️ Como Rodar no Computador
 
-Você só precisa ter o **Python instalado** (não precisa instalar nenhuma biblioteca extra).
+Você só precisa ter o **Node.js 22+ instalado** (ele roda os arquivos TypeScript diretamente, sem precisar de compilação manual nem instalar pacotes pesados).
 
 1. **Ver a simulação funcionando**:
    ```bash
-   python main.py
+   npm start
+   # ou: node --experimental-strip-types src/main.ts
    ```
 
 2. **Rodar os testes automáticos**:
    ```bash
-   python -m unittest tests.py
+   npm test
+   # ou: node --experimental-strip-types --test tests.ts
    ```
 
 ---

@@ -1,0 +1,21 @@
+{
+  "name": "analise-projeto-software-lab",
+  "version": "1.0.0",
+  "description": "Laboratório prático de Análise e Projeto de Software em TypeScript",
+  "type": "module",
+  "scripts": {
+    "start": "node --experimental-strip-types src/main.ts",
+    "test": "node --experimental-strip-types --test tests.ts"
+  },
+  "keywords": [
+    "engenharia-de-software",
+    "typescript",
+    "design-patterns",
+    "state",
+    "strategy",
+    "observer",
+    "uml"
+  ],
+  "author": "Alexandre Souza <alexleonec6@gmail.com>",
+  "license": "MIT"
+}
